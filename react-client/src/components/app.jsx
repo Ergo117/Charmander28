@@ -140,6 +140,7 @@ url : 'https://www.yelp.com/biz/the-alcove-sunnyside?adjust_creative=CaRD0iikgPp
           <Route exact={true} path="/" render={() => <SearchLocation changeLoc={this.onChangeLocation} />} />
           <Route exact={true} path="/" render={() => <AddPrice changeBudget={this.onChangePrice} />} />
           <Route exact={true} path="/" render={() => <AddCategory setActivities={this.setActivities} />} />
+          <Route exact={true} path="/" render={ ()=><button type="button" className="btn btn-primary mb-2" onClick={this.go} > GO </button> }/>
           <Route path="/eatview" render={ ()=> <EatView /> } />
         </div>
       </BrowserRouter>
