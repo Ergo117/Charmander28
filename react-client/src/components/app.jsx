@@ -6,6 +6,9 @@ import AddPrice from './AddPrice.jsx';
 import Header from './navHeader.jsx';
 import AddCategory from './AddCategory.jsx';
 import axios from 'axios';
+import EatView from './EatView.jsx';
+import EatViewListEntry from './EatViewListEntry.jsx';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,14 +19,17 @@ class App extends React.Component {
       price: '',
       activities: [],
       sleep: [],
-      eat: [],
+      eat: [{ name: 'The Alcove',
+url : 'https://www.yelp.com/biz/the-alcove-sunnyside?adjust_creative=CaRD0iikgPprS3wUNzdG2A&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=CaRD0iikgPprS3wUNzdG2A'}],
       party:[],
       explore:[],
+      hasResults: false,
     };
     this.onChangeLocation = this.onChangeLocation.bind(this);
     this.onChangePrice = this.onChangePrice.bind(this);
     this.setActivities = this.setActivities.bind(this);
     this.go = this.go.bind(this);
+    this.getExploreData = this.getExploreData.bind(this);
   }
 
   onChangeLocation(destination) {
@@ -47,84 +53,113 @@ class App extends React.Component {
   }
 
   go() {
-    console.log('I am componentDidMount');
-    if (this.state.activities.includes('explore')) {
-      console.log('Im inside if stmt explore');
+    if (this.state.activities.includes('explore') && this.state.location !== '' && this.state.price !== '') {
       axios.post('http://localhost:3000/explore', {
         location: this.state.location,
         price: this.state.price,
       })
         .then(response => {
-           console.log('successfull', response);
+          this.getExploreData(response.data, 'explore');
+          this.setState.hasResults = true;
         })
         .catch(error => {
           console.log('error..!!', error);
         });
     }
 
-     if (this.state.activities.includes('sleep')) {
-      console.log('Im inside sleep stmt');
+    if (this.state.activities.includes('sleep') && this.state.location !== '' && this.state.price !== '') {
       axios.post('http://localhost:3000/sleep', {
         location: this.state.location,
         price: this.state.price,
       })
-        .then(response => {
-           console.log('successfull', response);
+        .then((response) => {
+          console.log('successfull', response);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('error..!!', error);
         });
     }
 
-     if (this.state.activities.includes('eat')) {
-      console.log('Im inside eat stmt');
+    if (this.state.activities.includes('eat') && this.state.location !== '' && this.state.price !== '') {
       axios.post('http://localhost:3000/eat', {
         location: this.state.location,
         price: this.state.price,
       })
-        .then(response => {
-           console.log('successfull', response);
+        .then((response) => {
+          console.log('successfull', response);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('error..!!', error);
         });
     }
 
-      if (this.state.activities.includes('party')) {
-      console.log('Im inside party stmt');
+    if (this.state.activities.includes('party') && this.state.location !== '' && this.state.price !== '') {
       axios.post('http://localhost:3000/party', {
         location: this.state.location,
         price: this.state.price,
       })
-        .then(response => {
+        .then((response) => {
            console.log('successfull', response);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log('error..!!', error);
         });
-      }
-
-
+    }
   }
 
-  render() {
-    // console.log('new state', this.state.activities);
+  getExploreData(data) {
+    this.setState({
+      explore: data,
+    }, () => { console.log('explore state', this.state.explore); });
+  }
+
+  renderResultsPage() {
+    if (this.state.hasResults === true) {
+      return (
+        <div>
+          Page has results!
+        </div>
+      );
+    }
+  }
+
+  homePage() {
     return (
       <div>
-        <div>
-          <h1>Trip collab</h1>
-          <div>
-            <SearchLocation changeLoc={this.onChangeLocation} />
-            <AddPrice changeBudget={this.onChangePrice} />
-            <AddCategory setActivities={this.setActivities} />
-          </div>
-        </div>
-        <div>
-          <button type="button" className="btn btn-primary mb-2" onClick={this.go} > GO </button>
-        </div>
       </div>
+    )
+  }
+//       <Router>
+//         <Route exact={true} path="/" component={App} />
+//       </Router>
+
+  render() {
+    return (
+      <BrowserRouter>
+        <div>
+          <Route exact={true} path="/" render={() => <SearchLocation changeLoc={this.onChangeLocation} />} />
+          <Route exact={true} path="/" render={() => <AddPrice changeBudget={this.onChangePrice} />} />
+          <Route exact={true} path="/" render={() => <AddCategory setActivities={this.setActivities} />} />
+          <Route path="/eatview" render={ ()=> <EatView /> } />
+        </div>
+      </BrowserRouter>
     );
   }
 }
 
 export default App;
+
+//      <div>
+//         <div>
+//           <h1>Trip collab</h1>
+//           <div>
+//             {this.renderResultsPage()}
+//             <SearchLocation changeLoc={this.onChangeLocation} />
+//             <AddPrice changeBudget={this.onChangePrice} />
+//             <AddCategory setActivities={this.setActivities} />
+//           </div>
+//         </div>
+//         <div>
+//           <button type="button" className="btn btn-primary mb-2" onClick={this.go} > GO </button>
+//         </div>
+//       </div>

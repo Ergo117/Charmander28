@@ -11,28 +11,27 @@ class SearchLocation extends React.Component {
     this.handleReturnKey = this.handleReturnKey.bind(this);
   }
 
+  // Renders the value entered into the search field
   handleInputChange(e) {
     this.setState({
       location: e.target.value,
     });
-    console.log('input data', this.state.location);
-    console.log('input data', this.state.location);
   }
-
+  
+  // Saves search field value upon pressing Enter/Return key
   handleReturnKey(e) {
     if (e.key === 'Enter') {
       this.props.changeLoc(this.state.location);
-      this.props.searchLocation(this.state.location);
-      console.log('return key function', this.state.location);
     }
   }
 
+  // Not currently in use, standard click handler
   handleClick(e) {
     e.preventDefault();
     this.props.searchLocation(this.target.name);
   }
 
-
+  // Passes Search data back to parent if user is no longer in the search field
   onSetDestination() {
     this.props.changeLoc(this.state.location);
   }

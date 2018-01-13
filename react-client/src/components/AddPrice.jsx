@@ -24,16 +24,16 @@ class AddPrice extends React.Component {
     return (
       <div>
         <label>
-          <input type="radio" name="price" value="$" onClick={this.priceHandler} />$
+          <input type="radio" name="price" value="1" onClick={this.priceHandler} />$
         </label>
         <label>
-          <input type="radio" name="price" value="$$" onClick={this.priceHandler} />$$
+          <input type="radio" name="price" value="2" onClick={this.priceHandler} />$$
         </label>
         <label>
-          <input type="radio" name="price" value="$$$" onClick={this.priceHandler} />$$$
+          <input type="radio" name="price" value="3" onClick={this.priceHandler} />$$$
         </label>
         <label>
-          <input type="radio" name="price" value="$$$$" onClick={this.priceHandler} />$$$$
+          <input type="radio" name="price" value="4" onClick={this.priceHandler} />$$$$
         </label>
       </div>
 

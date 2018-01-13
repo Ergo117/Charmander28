@@ -7,6 +7,7 @@ import Header from './components/navHeader.jsx';
 import AddCategory from './components/AddCategory.jsx';
 import axios from 'axios';
 import App from './components/app.jsx';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class Index extends React.Component {
   constructor(props) {
@@ -43,15 +44,15 @@ class Index extends React.Component {
     });
   }
 
-  render() {
-    // console.log('new state', this.state.activities);
-    return (
-      <div>
-        <App />
-      </div>
-    );
-  }
+  // render() {
+  //   // console.log('new state', this.state.activities);
+  //   return (
+  //     <div>
+  //       <App />
+  //     </div>
+  //   );
+  // }
 }
 
 
-ReactDOM.render(<Index />, document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
