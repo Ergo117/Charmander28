@@ -8,7 +8,7 @@ import AddCategory from './AddCategory.jsx';
 import axios from 'axios';
 import EatView from './EatView.jsx';
 import EatViewListEntry from './EatViewListEntry.jsx';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 class App extends React.Component {
   constructor(props) {
@@ -123,9 +123,10 @@ url : 'https://www.yelp.com/biz/the-alcove-sunnyside?adjust_creative=CaRD0iikgPp
     }
   }
 
-  homePage() {
+  submitButton() {
     return (
       <div>
+        <Link to="/eatview"><button type="button" className="btn btn-primary mb-2" onClick={this.go} > GO </button> }/></Link>
       </div>
     )
   }
@@ -137,10 +138,10 @@ url : 'https://www.yelp.com/biz/the-alcove-sunnyside?adjust_creative=CaRD0iikgPp
     return (
       <BrowserRouter>
         <div>
-          <Route exact={true} path="/" render={() => <SearchLocation changeLoc={this.onChangeLocation} />} />
-          <Route exact={true} path="/" render={() => <AddPrice changeBudget={this.onChangePrice} />} />
-          <Route exact={true} path="/" render={() => <AddCategory setActivities={this.setActivities} />} />
-          <Route exact={true} path="/" render={ ()=><button type="button" className="btn btn-primary mb-2" onClick={this.go} > GO </button> }/>
+          <Route exact path="/" render={() => <SearchLocation changeLoc={this.onChangeLocation} />} />
+          <Route exact path="/" render={() => <AddPrice changeBudget={this.onChangePrice} />} />
+          <Route exact path="/" render={() => <AddCategory setActivities={this.setActivities} />} />
+          <Route exact path="/" render={ ()=> <Link to="/eatview"><button type="button" className="btn btn-primary mb-2" onClick={this.go} > GO </button></Link> }/>
           <Route path="/eatview" render={ ()=> <EatView /> } />
         </div>
       </BrowserRouter>

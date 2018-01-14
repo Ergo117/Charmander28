@@ -7,6 +7,7 @@ import Header from './navHeader.jsx';
 import AddCategory from './AddCategory.jsx';
 import axios from 'axios';
 
+
 class TripView extends React.Component {
   constructor(props) {
     super(props);
